@@ -80,6 +80,30 @@ app.post('/api/process-recurring-tasks', authorizeInternalJob, async (req, res) 
 });
 
 // ============================================
+// CHECK TABLES ENDPOINT - Verify database tables
+// ============================================
+app.get('/api/check-tables', async (req, res) => {
+  const db = require('./db');
+  try {
+    const [tables] = await db.query('SHOW TABLES');
+    const tableNames = tables.map(t => Object.values(t)[0]);
+    res.json({ 
+      tables: tableNames,
+      hasUsers: tableNames.includes('users'),
+      hasTasks: tableNames.includes('tasks'),
+      hasComments: tableNames.includes('task_comments'),
+      hasNotificationLog: tableNames.includes('notification_log')
+    });
+  } catch (error) {
+    console.error('Check tables error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+// ============================================
+// END OF CHECK TABLES ROUTE
+// ============================================
+
+// ============================================
 // TEMPORARY SETUP ROUTE - Remove after tables are created
 // ============================================
 app.get('/api/setup-db', async (req, res) => {
