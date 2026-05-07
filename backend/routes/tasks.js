@@ -36,7 +36,7 @@ function getNextRecurringDate(currentDate, recurrenceType) {
 router.get('/', async (req, res) => {
     try {
         const [tasks] = await db.query(
-            'SELECT *, DATE_FORMAT(due_time, "%H:%i") as due_time FROM tasks WHERE user_id = ? ORDER BY due_date ASC',
+            'SELECT * FROM tasks WHERE user_id = ? ORDER BY due_date ASC',
             [req.user.id]
         );
         
@@ -103,7 +103,7 @@ router.post('/', upload.single('attachment'), async (req, res) => {
             ]
         );
         
-        const [newTask] = await db.query('SELECT *, DATE_FORMAT(due_time, "%H:%i") as due_time FROM tasks WHERE id = ?', [result.insertId]);
+        const [newTask] = await db.query('SELECT * FROM tasks WHERE id = ?', [result.insertId]);
         
         if (newTask[0].attachments) {
             newTask[0].attachments = JSON.parse(newTask[0].attachments);
@@ -230,7 +230,7 @@ router.patch('/:id', async (req, res) => {
                     const nextDateStr = getNextRecurringDate(lastDueDate, parentTask.recurrence_type);
                     
                     if (!nextDateStr) {
-                        const [updatedTask] = await db.query('SELECT *, DATE_FORMAT(due_time, "%H:%i") as due_time FROM tasks WHERE id = ?', [taskId]);
+                        const [updatedTask] = await db.query('SELECT * FROM tasks WHERE id = ?', [taskId]);
                         if (updatedTask[0].attachments) {
                             updatedTask[0].attachments = JSON.parse(updatedTask[0].attachments);
                         }
@@ -282,7 +282,7 @@ router.patch('/:id', async (req, res) => {
             }
         }
         
-        const [updatedTask] = await db.query('SELECT *, DATE_FORMAT(due_time, "%H:%i") as due_time FROM tasks WHERE id = ?', [taskId]);
+        const [updatedTask] = await db.query('SELECT * FROM tasks WHERE id = ?', [taskId]);
         
         if (updatedTask[0].attachments) {
             updatedTask[0].attachments = JSON.parse(updatedTask[0].attachments);
@@ -343,7 +343,7 @@ router.put('/:id', upload.single('attachment'), async (req, res) => {
             return res.status(404).json({ error: 'Task not found' });
         }
         
-        const [updatedTask] = await db.query('SELECT *, DATE_FORMAT(due_time, "%H:%i") as due_time FROM tasks WHERE id = ?', [taskId]);
+        const [updatedTask] = await db.query('SELECT * FROM tasks WHERE id = ?', [taskId]);
         
         if (updatedTask[0].attachments) {
             updatedTask[0].attachments = JSON.parse(updatedTask[0].attachments);
