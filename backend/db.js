@@ -13,15 +13,11 @@ const dbConfig = {
     connectionLimit: Number(process.env.DB_CONNECTION_LIMIT || 10),
     queueLimit: 0,
     dateStrings: true,
-    timezone: 'local'
+    timezone: 'local',
+    ssl: {
+        rejectUnauthorized: false  // Add this line
+    }
 };
-
-if (isTrue(process.env.DB_SSL)) {
-    dbConfig.ssl = {
-        minVersion: 'TLSv1.2',
-        rejectUnauthorized: true
-    };
-}
 
 const db = mysql.createPool(dbConfig);
 
