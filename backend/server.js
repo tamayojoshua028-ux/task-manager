@@ -104,6 +104,49 @@ app.get('/api/check-tables', async (req, res) => {
 // ============================================
 
 // ============================================
+// DEBUG DATABASE ENDPOINT - Test database operations
+// ============================================
+app.get('/api/debug-db', async (req, res) => {
+  const db = require('./db');
+  try {
+    // Test connection
+    const [testResult] = await db.query('SELECT 1 as test');
+    
+    // Test insert (temporary)
+    const testEmail = `debug_${Date.now()}@test.com`;
+    const [insertResult] = await db.query(
+      'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+      ['Debug User', testEmail, 'debug123']
+    );
+    
+    // Verify insert worked
+    const [checkUser] = await db.query('SELECT * FROM users WHERE id = ?', [insertResult.insertId]);
+    
+    // Clean up - delete test user
+    await db.query('DELETE FROM users WHERE id = ?', [insertResult.insertId]);
+    
+    res.json({ 
+      success: true, 
+      testConnection: testResult,
+      insertWorked: insertResult.affectedRows > 0,
+      testUserId: insertResult.insertId,
+      message: 'Database is working properly'
+    });
+  } catch (error) {
+    console.error('Debug error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message,
+      sqlMessage: error.sqlMessage,
+      code: error.code
+    });
+  }
+});
+// ============================================
+// END OF DEBUG DATABASE ROUTE
+// ============================================
+
+// ============================================
 // TEMPORARY SETUP ROUTE - Remove after tables are created
 // ============================================
 app.get('/api/setup-db', async (req, res) => {
