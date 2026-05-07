@@ -1,0 +1,184 @@
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #222831, #1a1e26);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: splashFadeIn 0.5s ease;
+}
+
+.splash-screen.fade-out {
+  animation: splashFadeOut 0.5s ease forwards;
+}
+
+@keyframes splashFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes splashFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; visibility: hidden; }
+}
+
+.splash-content {
+  text-align: center;
+  animation: contentFloat 2s ease-in-out infinite;
+}
+
+@keyframes contentFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.splash-logo {
+  margin-bottom: 50px;
+}
+
+.logo-emoji {
+  font-size: 80px;
+  display: block;
+  margin-bottom: 20px;
+  animation: logoBounce 1s ease infinite;
+}
+
+@keyframes logoBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.splash-logo h1 {
+  font-size: 36px;
+  background: linear-gradient(135deg, #EEEEEE, #76ABAE);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.splash-animation {
+  margin-bottom: 40px;
+}
+
+.splash-ring {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 30px;
+}
+
+.ring-segment {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #76ABAE;
+  border-radius: 50%;
+  opacity: 0;
+  animation: ringPulse 2s ease-out infinite;
+}
+
+.ring-segment:nth-child(1) { animation-delay: 0s; }
+.ring-segment:nth-child(2) { animation-delay: 0.5s; }
+.ring-segment:nth-child(3) { animation-delay: 1s; }
+.ring-segment:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes ringPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.splash-progress {
+  width: 250px;
+  height: 4px;
+  background: rgba(118, 171, 174, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 20px auto;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #76ABAE, #EEEEEE);
+  border-radius: 4px;
+  transition: width 0.1s linear;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: progressShimmer 1s infinite;
+}
+
+@keyframes progressShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.splash-text {
+  font-size: 14px;
+  color: #c5c5c5;
+  margin-top: 15px;
+}
+
+.splash-percentage {
+  font-size: 24px;
+  font-weight: bold;
+  color: #76ABAE;
+  margin-top: 10px;
+  animation: pulseText 1s ease infinite;
+}
+
+@keyframes pulseText {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.splash-footer {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.splash-footer p {
+  font-size: 12px;
+  color: #c5c5c5;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .logo-emoji {
+    font-size: 60px;
+  }
+  
+  .splash-logo h1 {
+    font-size: 28px;
+  }
+  
+  .splash-ring {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .splash-progress {
+    width: 200px;
+  }
+}

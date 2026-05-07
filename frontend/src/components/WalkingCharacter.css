@@ -1,0 +1,34 @@
+.walking-character {
+  position: fixed;
+  z-index: 1000;
+  transition: left 0.05s linear;
+  pointer-events: none;
+}
+
+.character-walk {
+  font-size: 60px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+.character-walk.flip {
+  transform: scaleX(-1);
+}
+
+@media (max-width: 768px) {
+  .character-walk {
+    font-size: 40px;
+  }
+}
+.walking-character {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  z-index: 1000;
+  transition: left 0.05s linear;
+  cursor: pointer;
+}
+
+.walking-character:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}

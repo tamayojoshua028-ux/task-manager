@@ -1,0 +1,109 @@
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(49, 54, 63, 0.95);
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 20px 20px;
+  border-top: 1px solid rgba(118, 171, 174, 0.2);
+  z-index: 100;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-icon {
+  font-size: 24px;
+  transition: transform 0.3s ease;
+}
+
+.bottom-nav-item:hover .nav-icon {
+  transform: translateY(-3px);
+}
+
+.bottom-nav-item.active .nav-icon {
+  transform: translateY(-5px);
+  animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(-5px); }
+  50% { transform: translateY(-10px); }
+}
+
+.nav-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.bottom-nav-item.active .nav-label {
+  color: #76ABAE;
+  font-weight: 700;
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: #76ABAE;
+  border-radius: 3px;
+  animation: indicatorGlow 1s ease infinite;
+}
+
+@keyframes indicatorGlow {
+  0%, 100% { opacity: 0.6; width: 20px; }
+  50% { opacity: 1; width: 25px; }
+}
+
+@media (max-width: 768px) {
+  .bottom-nav {
+    padding: 8px 16px 18px;
+  }
+  
+  .nav-icon {
+    font-size: 22px;
+  }
+  
+  .nav-label {
+    font-size: 10px;
+  }
+  
+  .bottom-nav-item {
+    padding: 6px 12px;
+  }
+}
+
+/* Add padding to app content to prevent overlap */
+.app {
+  padding-bottom: 80px;
+}
